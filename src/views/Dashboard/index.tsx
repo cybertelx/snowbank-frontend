@@ -7,6 +7,7 @@ import { IReduxState } from "../../store/slices/state.interface";
 import { IAppSlice } from "../../store/slices/app-slice";
 
 import { useTranslation } from "react-i18next";
+import DashboardCard from "./card";
 
 function Dashboard() {
     const { t } = useTranslation();
@@ -21,149 +22,78 @@ function Dashboard() {
             <div className="dashboard-infos-wrap">
                 <Zoom in={true}>
                     <Grid container spacing={4}>
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">{t("RiskFreeValue")}</p>
-                                <p className="card-value">
-                                    {isAppLoading ? (
-                                        <Skeleton width="250px" />
-                                    ) : (
-                                        new Intl.NumberFormat("en-US", {
-                                            style: "currency",
-                                            currency: "USD",
-                                            maximumFractionDigits: 2,
-                                            minimumFractionDigits: 2,
-                                        }).format(app.rfv)
-                                    )}
-                                </p>
-                            </div>
-                        </Grid>
-                        {/* <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">{t("RiskFreeValueDelta")}</p>
-                                <p className="card-value">{isAppLoading ? <Skeleton width="250px" /> : `${trim(Number(app.deltaMarketPriceRfv), 2)}%`}</p>
-                            </div>
-                        </Grid> */}
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">{t("SBPrice")}</p>
-                                <p className="card-value">{isAppLoading ? <Skeleton width="100px" /> : `$${trim(app.marketPrice, 2)}`}</p>
-                            </div>
-                        </Grid>
+                        <DashboardCard
+                            title={t("RiskFreeValue")}
+                            value={new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                maximumFractionDigits: 2,
+                                minimumFractionDigits: 2,
+                            }).format(app.rfv)}
+                        />
 
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">{t("MarketCap")}</p>
-                                <p className="card-value">
-                                    {isAppLoading ? (
-                                        <Skeleton width="160px" />
-                                    ) : (
-                                        new Intl.NumberFormat("en-US", {
-                                            style: "currency",
-                                            currency: "USD",
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.marketCap)
-                                    )}
-                                </p>
-                            </div>
-                        </Grid>
+                        <DashboardCard title={t("SBPrice")} value={`$${trim(app.marketPrice, 2)}`} />
 
-                        {/* <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">{t("SupplyStakedTotal")}</p>
-                                <p className="card-value">
-                                    {isAppLoading ? (
-                                        <Skeleton width="250px" />
-                                    ) : (
-                                        `${new Intl.NumberFormat("en-US", {
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.circSupply)}
-                                        /
-                                        ${new Intl.NumberFormat("en-US", {
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.totalSupply)}`
-                                    )}
-                                </p>
-                            </div>
-                        </Grid> */}
+                        {/*<DashboardCard title={t("RiskFreeValueDelta")} value={`${trim(Number(app.deltaMarketPriceRfv), 2)}%`} /> */}
 
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">{t("TVL")}</p>
-                                <p className="card-value">
-                                    {isAppLoading ? (
-                                        <Skeleton width="250px" />
-                                    ) : (
-                                        new Intl.NumberFormat("en-US", {
-                                            style: "currency",
-                                            currency: "USD",
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.stakingTVL)
-                                    )}
-                                </p>
-                            </div>
-                        </Grid>
+                        <DashboardCard
+                            title={t("MarketCap")}
+                            value={new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                maximumFractionDigits: 0,
+                                minimumFractionDigits: 0,
+                            }).format(app.marketCap)}
+                        />
 
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">{t("APY")}</p>
-                                <p className="card-value">{isAppLoading ? <Skeleton width="250px" /> : `${new Intl.NumberFormat("en-US").format(Number(trimmedStakingAPY))}%`}</p>
-                            </div>
-                        </Grid>
+                        {/*<DashboardCard
+                            title={t("SupplyStakedTotal")}
+                            value={`${new Intl.NumberFormat("en-US", {
+                                maximumFractionDigits: 0,
+                                minimumFractionDigits: 0,
+                            }).format(app.circSupply)}
+                                /
+                                ${new Intl.NumberFormat("en-US", {
+                                    maximumFractionDigits: 0,
+                                    minimumFractionDigits: 0,
+                                }).format(app.totalSupply)}`}
+                            />*/}
 
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">{t("CurrentIndex")}</p>
-                                <p className="card-value">{isAppLoading ? <Skeleton width="250px" /> : `${trim(Number(app.currentIndex), 2)} SB`}</p>
-                            </div>
-                        </Grid>
+                        <DashboardCard
+                            title={t("TVL")}
+                            value={new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                maximumFractionDigits: 0,
+                                minimumFractionDigits: 0,
+                            }).format(app.stakingTVL)}
+                        />
 
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">{t("TreasuryBalance")}</p>
-                                <p className="card-value">
-                                    {isAppLoading ? (
-                                        <Skeleton width="250px" />
-                                    ) : (
-                                        new Intl.NumberFormat("en-US", {
-                                            style: "currency",
-                                            currency: "USD",
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.treasuryBalance)
-                                    )}
-                                </p>
-                            </div>
-                        </Grid>
+                        <DashboardCard title={t("APY")} value={`${new Intl.NumberFormat("en-US").format(Number(trimmedStakingAPY))}%`} />
 
-                        {/* <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">{t("BackingPerSB")}</p>
-                                <p className="card-value">
-                                    {isAppLoading ? (
-                                        <Skeleton width="250px" />
-                                    ) : (
-                                        new Intl.NumberFormat("en-US", {
-                                            style: "currency",
-                                            currency: "USD",
-                                            maximumFractionDigits: 0,
-                                            minimumFractionDigits: 0,
-                                        }).format(app.rfv)
-                                    )}
-                                </p>
-                            </div>
-                        </Grid> */}
+                        <DashboardCard title={t("CurrentIndex")} value={`${trim(Number(app.currentIndex), 2)} SB`} />
 
-                        <Grid item lg={6} md={6} sm={6} xs={12}>
-                            <div className="dashboard-card">
-                                <p className="card-title">{t("Runway")}</p>
-                                <p className="card-value">{isAppLoading ? <Skeleton width="250px" /> : `${trim(Number(app.runway), 1)} Days`}</p>
-                            </div>
-                        </Grid>
+                        <DashboardCard
+                            title={t("TreasuryBalance")}
+                            value={new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                maximumFractionDigits: 0,
+                                minimumFractionDigits: 0,
+                            }).format(app.treasuryBalance)}
+                        />
+
+                        {/* <DashboardCard
+                            title={t("BackingPerSB")}
+                            value={new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                maximumFractionDigits: 0,
+                                minimumFractionDigits: 0,
+                            }).format(app.rfv)}
+                        /> */}
+
+                        <DashboardCard title={t("Runway")} value={`${trim(Number(app.runway), 1)} Days`} />
                     </Grid>
                 </Zoom>
             </div>
